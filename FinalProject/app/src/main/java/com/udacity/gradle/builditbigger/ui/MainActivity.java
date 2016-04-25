@@ -16,9 +16,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void tellJoke(View view) {
-        new EndpointsAsyncTask().execute(this);
-    }
-
-
 }
