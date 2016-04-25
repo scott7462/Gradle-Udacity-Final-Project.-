@@ -25,6 +25,7 @@ public class MainActivityFragment extends Fragment {
 
     @Bind(R.id.adView)
     AdView adView;
+
     private InterstitialAd mInterstitialAd;
 
     public MainActivityFragment() {
