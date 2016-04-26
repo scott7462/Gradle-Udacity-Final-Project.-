@@ -16,12 +16,18 @@ import java.io.IOException;
 /**
  * Created by scott7462 on 4/24/16.
  */
-public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
 
+    private ResultJokeListener listener;
+
+    public EndpointsAsyncTask(ResultJokeListener listener) {
+        this.listener = listener;
+    }
+
     @Override
-    protected String doInBackground(Context... params) {
+    protected String doInBackground(Void... params) {
         if (myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -37,8 +43,6 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
                     });
             myApiService = builder.build();
         }
-        context = params[0];
-
         try {
             return myApiService.sayAJoke().execute().getJoke();
         } catch (IOException e) {
@@ -48,9 +52,6 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Intent intent = new Intent(context, JokeActivity.class);
-        intent.putExtra(JokeActivity.JOKE_TEXT, result);
-        context.startActivity(intent);
-//        Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+        listener.getJokeResult(result);
     }
 }

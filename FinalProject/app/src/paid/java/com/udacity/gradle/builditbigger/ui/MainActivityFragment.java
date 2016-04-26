@@ -1,13 +1,16 @@
 package com.udacity.gradle.builditbigger.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.proggmail.jud.jokeandroid.JokeActivity;
 import com.udacity.gradle.builditbigger.R;
 import com.udacity.gradle.builditbigger.rest.EndpointsAsyncTask;
+import com.udacity.gradle.builditbigger.rest.ResultJokeListener;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -16,7 +19,7 @@ import butterknife.OnClick;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment  implements ResultJokeListener {
 
 
 
@@ -34,7 +37,7 @@ public class MainActivityFragment extends Fragment {
 
 
     public void tellJoke() {
-        new EndpointsAsyncTask().execute(getActivity());
+        new EndpointsAsyncTask(this).execute();
     }
 
     @Override
@@ -47,5 +50,12 @@ public class MainActivityFragment extends Fragment {
     public void onClick() {
             tellJoke();
 
+    }
+
+    @Override
+    public void getJokeResult(String result) {
+        Intent intent = new Intent(getActivity(), JokeActivity.class);
+        intent.putExtra(JokeActivity.JOKE_TEXT, result);
+        getActivity().startActivity(intent);
     }
 }
