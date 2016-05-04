@@ -18,15 +18,11 @@ allprojects {
     }
 }
 
-
-project(':backend'){
-    task startup{
-        dependsOn "appengineRun"
-        dependsOn "test"
-        dependsOn "appengineStop"
-        doLast {
-            println "executing..."
-        }
+task testTaskServer(dependsOn: [":backend:appengineRun",
+                              ":app:connectedAndroidTest",
+                              ':backend:appengineStop']) {
+    doLast {
+        println 'optionalTask completed'
     }
-
 }
+
