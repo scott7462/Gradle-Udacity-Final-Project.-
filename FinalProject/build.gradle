@@ -18,11 +18,13 @@ allprojects {
     }
 }
 
-task testTaskServer(dependsOn: [":backend:appengineRun",
-                                ":app:connectedAndroidTest",
-                                ':backend:appengineStop']) {
+task testTask(dependsOn: [
+        ":backend:appengineRun",
+        ":app:connectedAndroidTest",
+        ':backend:appengineStop'
+]) {
     doLast {
-        println 'optionalTask completed'
+        println 'extra task by Pedro Scott completed'
     }
 }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -39,6 +40,8 @@ public class MainActivityFragment extends Fragment implements ResultJokeListener
 
     @Bind(R.id.adView)
     AdView adView;
+    @Bind(R.id.pBMain)
+    RelativeLayout pBMain;
 
     private InterstitialAd mInterstitialAd;
 
@@ -80,6 +83,7 @@ public class MainActivityFragment extends Fragment implements ResultJokeListener
 
 
     public void tellJoke() {
+        pBMain.setVisibility(View.VISIBLE);
         new EndpointsAsyncTask(this).execute();
     }
 
@@ -101,6 +105,7 @@ public class MainActivityFragment extends Fragment implements ResultJokeListener
 
     @Override
     public void getJokeResult(String result) {
+        pBMain.setVisibility(View.GONE);
         Intent intent = new Intent(getActivity(), JokeActivity.class);
         intent.putExtra(JokeActivity.JOKE_TEXT, result);
         getActivity().startActivity(intent);

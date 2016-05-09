@@ -6,14 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.proggmail.jud.jokeandroid.JokeActivity;
 import com.udacity.gradle.builditbigger.R;
 import com.udacity.gradle.builditbigger.rest.EndpointsAsyncTask;
 import com.udacity.gradle.builditbigger.rest.ResultJokeListener;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 /**
  * Copyright (C) 2015 The Android Open Source Project
  * <p/>
@@ -29,9 +32,11 @@ import butterknife.OnClick;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class MainActivityFragment extends Fragment  implements ResultJokeListener {
+public class MainActivityFragment extends Fragment implements ResultJokeListener {
 
 
+    @Bind(R.id.pBMain)
+    RelativeLayout pBMain;
 
     public MainActivityFragment() {
     }
@@ -43,7 +48,6 @@ public class MainActivityFragment extends Fragment  implements ResultJokeListene
         ButterKnife.bind(this, root);
         return root;
     }
-
 
 
     public void tellJoke() {
@@ -58,12 +62,14 @@ public class MainActivityFragment extends Fragment  implements ResultJokeListene
 
     @OnClick(R.id.bTJoke)
     public void onClick() {
-            tellJoke();
+        pBMain.setVisibility(View.VISIBLE);
+        tellJoke();
 
     }
 
     @Override
     public void getJokeResult(String result) {
+        pBMain.setVisibility(View.GONE);
         Intent intent = new Intent(getActivity(), JokeActivity.class);
         intent.putExtra(JokeActivity.JOKE_TEXT, result);
         getActivity().startActivity(intent);
