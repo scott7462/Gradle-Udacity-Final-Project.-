@@ -19,8 +19,8 @@ allprojects {
 }
 
 task testTaskServer(dependsOn: [":backend:appengineRun",
-                              ":app:connectedAndroidTest",
-                              ':backend:appengineStop']) {
+                                ":app:connectedAndroidTest",
+                                ':backend:appengineStop']) {
     doLast {
         println 'optionalTask completed'
     }
